@@ -19,18 +19,17 @@ import dayjs from "dayjs";
 import { type FormEvent, useId, useState } from "react";
 
 type EditModalProps = {
-  diaper: Diaper | null;
+  diaper: Diaper;
   onCancel(): void;
   onEdit: (diaper: Partial<Diaper>) => void;
 };
 
 export function EditModal({ diaper, onCancel, onEdit }: EditModalProps) {
   const diaperTypeSelectLabelId = useId();
-  const [notes, setNotes] = useState<string>(diaper?.notes ?? "");
-  const [start, setStart] = useState<dayjs.Dayjs>(
-    dayjs(diaper?.start ?? new Date().toISOString()),
-  );
-  const [type, setType] = useState<DiaperType>(diaper?.type ?? "wet");
+
+  const [notes, setNotes] = useState<string>(diaper.notes ?? "");
+  const [start, setStart] = useState<dayjs.Dayjs>(dayjs(diaper.start));
+  const [type, setType] = useState<DiaperType>(diaper.type);
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,6 +77,7 @@ export function EditModal({ diaper, onCancel, onEdit }: EditModalProps) {
             <DateTimePicker
               label="Start"
               name="start"
+              timeSteps={{ hours: 1, minutes: 1 }}
               value={start}
               onChange={(value) => {
                 if (value !== null) {

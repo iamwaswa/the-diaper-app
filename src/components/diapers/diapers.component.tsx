@@ -130,14 +130,16 @@ export function Diapers({
           </TableBody>
         </Table>
       </TableContainer>
-      <EditModal
-        diaper={diaperToEdit}
-        onCancel={() => setDiaperToEdit(null)}
-        onEdit={(diaper) => {
-          onEditDiaper(diaper);
-          setDiaperToEdit(null);
-        }}
-      />
+      {diaperToEdit && (
+        <EditModal
+          diaper={diaperToEdit}
+          onCancel={() => setDiaperToEdit(null)}
+          onEdit={(diaper) => {
+            onEditDiaper(diaper);
+            setDiaperToEdit(null);
+          }}
+        />
+      )}
     </>
   );
 }
